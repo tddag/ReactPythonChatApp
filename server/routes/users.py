@@ -3,6 +3,7 @@ from database import engine
 from sqlalchemy import text
 import json
 from models import User
+import bcrypt
 
 def register_routes(app):
 
@@ -26,6 +27,7 @@ def register_routes(app):
 
             with engine.connect() as conn:
 
+                # check if user exists
                 result = conn.execute(text("SELECT * FROM users WHERE email = (:email)"), [data])
                 result_all = result.all()
 
@@ -34,15 +36,21 @@ def register_routes(app):
                         "error": "User already exists"
                     }), 400
                 
-
-                result = conn.execute(text("INSERT INTO users(name, email, password) VALUES (:name, :email, :password)"), [
-                    data
-                ])
+                # hash password
+                hashed = bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt())
+                result = conn.execute(text("INSERT INTO users(name, email, password) VALUES (:name, :email, :hashed)"), 
+                    {
+                        "name": name, 
+                        "email": email, 
+                        "hashed": hashed.decode("utf-8")
+                    }
+                )
 
                 conn.commit()
 
                 return jsonify({
-                    "msg": "Successfully register a new user"
+                    name: name,
+                    email: email,
                 }), 201
 
         except Exception as e:

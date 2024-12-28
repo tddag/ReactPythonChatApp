@@ -17,7 +17,8 @@
         - SQL Alchemy: Object Relational Mapper
         - Dot Env: load and set environment variables
         - Py MySQL: Python MySQL client library
-        - `pip install flask flask-cors sqlalchemy python-dotenv pymysql`
+        - Bcrypt: password hashing
+        - `pip install flask flask-cors sqlalchemy python-dotenv pymysql bcrypt`
     - Run the app `python3 -B main.py`
 - Setup MySQL
     - Download and Install MySQL Community Server
