@@ -63,4 +63,41 @@ def register_routes(app):
     # POST - login user
     @app.route("/api/users/login", methods=["POST"])
     def login_user():
-        return "Login User"
+        try:
+            data = request.json
+
+            email = data.get("email")
+            password = data.get("password")
+
+            if (email == None or password == None ):
+                return jsonify({
+                    "error": "Please add required fields"
+                }), 400
+            
+            with engine.connect() as conn:
+                query = text("SELECT * FROM users WHERE email = :email")
+                existingUser = conn.execute(query, {"email": email}).fetchone()
+
+                print("Password is: ", existingUser.password)
+
+                if (not existingUser):
+                    return jsonify({
+                        "error", "User not found!"
+                    }), 400
+                else:
+                    if (not bcrypt.checkpw(password.encode("utf-8"), existingUser.password.encode("utf-8"))):
+                        return jsonify({
+                            "error": "Incorrect Password"
+                        }), 400
+                    else:
+                        return jsonify({
+                            "name": existingUser.name,
+                            "email": existingUser.email
+                        }), 200
+
+        except Exception as e:
+            print("Failed to log in user")
+            print(e)
+            return jsonify({
+                "error": "Failed to log in user"
+            }), 500
