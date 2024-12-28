@@ -9,7 +9,6 @@ function App() {
   return (
     <>
       <div>
-        <h1 className="underline">Hello Tom</h1>
         <SignUp/>
       </div>
     </>
