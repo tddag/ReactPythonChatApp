@@ -81,9 +81,9 @@
  - connect db [x]
  - create client [x]
  - setup TailwindCSS [x]
- - create register page 
+ - create register page [x]
+ - create login page [x]
  - setup React Routes
- - create login page
  - connect client with server
  - create chat page
  - create api

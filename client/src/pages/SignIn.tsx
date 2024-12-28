@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 
 
 const SignIn = () => {
@@ -15,7 +16,9 @@ const SignIn = () => {
 
             <div className="flex gap-4 mt-5">
                 <p>Don't have an account?</p>
-                <span className="text-blue-500">Sign Up</span>
+                <Link to="/signup">
+                    <span className="text-blue-500">Sign Up</span>
+                </Link>   
             </div>
         </div>
     </div>
