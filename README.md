@@ -49,6 +49,20 @@
             <td>MySQL Database URL</td>
         </tr>
     </table>
+- Set up client enviroment variables (./client/.env):
+  - <table>
+        <tr>
+            <th>Variable</th>
+            <th>Value</th>
+            <th>Description</th>
+        </tr>
+        <tr>
+            <td>VITE_SERVER_URL</td>
+            <td>http://127.0.0.1:5000</td>
+            <td>Server URL</td>
+        </tr>
+    </table>
+
 
 
 
@@ -83,8 +97,9 @@
  - setup TailwindCSS [x]
  - create register page [x]
  - create login page [x]
- - setup React Routes
- - connect client with server
+ - setup React Routes [x]
+ - set up client env variables [x]
+ - take user form input, connect client with server (registerUser, loginUser apis)
  - create chat page
  - create api
 	- fetch all users
