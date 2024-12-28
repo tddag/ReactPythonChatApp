@@ -78,9 +78,11 @@
  - create routes/apis:
  	- register user [x]
  	- login user [x]
- - connect db 
- - create client
- - create register page
+ - connect db [x]
+ - create client [x]
+ - setup TailwindCSS [x]
+ - create register page 
+ - setup React Routes
  - create login page
  - connect client with server
  - create chat page

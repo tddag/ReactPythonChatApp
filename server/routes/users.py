@@ -78,11 +78,9 @@ def register_routes(app):
                 query = text("SELECT * FROM users WHERE email = :email")
                 existingUser = conn.execute(query, {"email": email}).fetchone()
 
-                print("Password is: ", existingUser.password)
-
                 if (not existingUser):
                     return jsonify({
-                        "error", "User not found!"
+                        "error": "User not found!"
                     }), 400
                 else:
                     if (not bcrypt.checkpw(password.encode("utf-8"), existingUser.password.encode("utf-8"))):
