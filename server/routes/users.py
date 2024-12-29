@@ -122,3 +122,13 @@ def register_routes(app):
                 "error": "Failed to fetch all users"
             })
     
+    # GET - get user conversations
+    @app.route("/api/users/<int:user_id>/conversations", methods=["GET"])
+    def get_user_conversations():
+        try:
+            pass
+        except Exception as e:
+            print("Failed to get user conversations", e)
+            return jsonify({
+                "error": "Failed to fetch user conversations"
+            })

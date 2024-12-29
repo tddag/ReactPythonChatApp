@@ -18,7 +18,7 @@
     - Py MySQL: Python MySQL client library
     - Bcrypt: password hashing
     - `pip install flask flask-cors sqlalchemy python-dotenv pymysql bcrypt`
-  - Run the app `python3 -B main.py`
+  - Run the server `python3 -B main.py`
 - Setup MySQL
   - Download and Install MySQL Community Server
   - Download and Install MySQL WorkBench
@@ -93,6 +93,8 @@
             <td>Server URL</td>
         </tr>
     </table>
+- Install Client dependencies: `cd client && npm i`
+- Start the client `npm run dev`
 
 # TODO
 
@@ -134,6 +136,7 @@
   - create room/conversation [x]
   - create chat/message [x]
   - fetch all conversation messages [x]
+  - fetch all user conversations
 - create conversation page
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
