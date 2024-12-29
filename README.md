@@ -99,12 +99,12 @@
  - create login page [x]
  - setup React Routes [x]
  - set up client env variables [x]
- - take user form input, connect client with server (registerUser, loginUser apis)
- - create chat page
+ - take user form input, connect client with server (registerUser, loginUser apis) [x]
  - create api
 	- fetch all users
 	- create room/conversation
-	- create chat/message
+	- create chat/message 
+ - create conversation page
  - implement JWT to protect apis
  - create redux toolkit to store user logged in details
  - check user and protect client route

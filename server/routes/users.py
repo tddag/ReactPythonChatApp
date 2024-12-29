@@ -99,3 +99,27 @@ def register_routes(app):
             return jsonify({
                 "error": "Failed to log in user"
             }), 500
+        
+    # GET - get all users
+    @app.route("/api/users", methods=["GET"])
+    def get_all_users():
+        try:
+            with engine.connect() as conn:
+                allUsers = conn.execute(text("SELECT * FROM users")).all()
+
+
+                users = [ {
+                    "name": row.name,
+                    "email": row.email
+                } for row in allUsers]
+                if allUsers:
+                    return jsonify(users), 200
+                else:
+                    return jsonify([]), 200
+
+        except Exception as e:
+            print("Failed to get all users", e)
+            return jsonify({
+                "error": "Failed to fetch all users"
+            })
+    
