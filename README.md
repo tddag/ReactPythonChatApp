@@ -132,7 +132,8 @@
 - create api
   - fetch all users [x]
   - create room/conversation [x]
-  - create chat/message
+  - create chat/message [x]
+  - fetch all conversation messages
 - create conversation page
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details

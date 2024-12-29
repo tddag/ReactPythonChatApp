@@ -8,9 +8,10 @@ CORS(app)
 def home():
     return "Hello! This is main page"
 
-from routes import users, conversations
+from routes import users, conversations, messages
 users.register_routes(app)
 conversations.register_routes(app)
+messages.register_routes(app)
 
 if __name__ == "__main__":
     app.run()

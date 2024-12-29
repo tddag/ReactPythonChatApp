@@ -1,8 +1,6 @@
 from flask import request, jsonify
 from database import engine
 from sqlalchemy import text
-import json
-from models import User
 import bcrypt
 
 def register_routes(app):
