@@ -42,3 +42,26 @@ def register_routes(app):
             return jsonify({
                 "error": "Failed to create a conversation"
             }), 500
+        
+
+    # GET - get all conversation messages
+    @app.route("/api/conversations/<int:conversation_id>/messages", methods=["GET"])
+    def get_conversation_messages(conversation_id):
+        try:
+            with engine.connect() as conn:
+                all_messages = conn.execute(text("SELECT messages.*, users.name as user_name FROM messages JOIN users ON sender_id = users.id WHERE conversation_id = :conversation_id"), {
+                    "conversation_id": conversation_id
+                }).all()
+
+                messages = [ {
+                    "message": message.message,
+                    "sender_id": message.sender_id,
+                    "sender_name": message.user_name
+                } for message in all_messages]
+
+                return jsonify(messages)
+        except Exception as e:
+            print("Failed to get conversation messages", e)
+            return jsonify({
+                "error": "Failed to fetch conversation_messages"
+            })

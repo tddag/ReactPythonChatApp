@@ -133,7 +133,7 @@
   - fetch all users [x]
   - create room/conversation [x]
   - create chat/message [x]
-  - fetch all conversation messages
+  - fetch all conversation messages [x]
 - create conversation page
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
