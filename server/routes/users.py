@@ -109,6 +109,7 @@ def register_routes(app):
 
 
                 users = [ {
+                    "id": row.id,
                     "name": row.name,
                     "email": row.email
                 } for row in allUsers]

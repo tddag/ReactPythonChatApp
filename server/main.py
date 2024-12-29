@@ -8,13 +8,9 @@ CORS(app)
 def home():
     return "Hello! This is main page"
 
-import importlib.util
-
-usersSpec = importlib.util.spec_from_file_location("users", "./routes/users.py")
-users = importlib.util.module_from_spec(usersSpec)
-usersSpec.loader.exec_module(users)
+from routes import users, conversations
 users.register_routes(app)
-
+conversations.register_routes(app)
 
 if __name__ == "__main__":
     app.run()
