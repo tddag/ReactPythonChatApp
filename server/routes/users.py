@@ -124,9 +124,58 @@ def register_routes(app):
     
     # GET - get user conversations
     @app.route("/api/users/<int:user_id>/conversations", methods=["GET"])
-    def get_user_conversations():
+    def get_user_conversations(user_id):
         try:
-            pass
+            with engine.connect() as conn:
+                allConversations = conn.execute(text("SELECT * FROM conversation_users WHERE user_id = :user_id"), {
+                    "user_id": user_id
+                }).all()
+
+                conversations = [ {
+                    "conversation_id": row.conversation_id,
+                    "users": [],
+                    "messages": []
+                } for row in allConversations]
+
+                users_dict = {}
+
+                for i in range(len(conversations)):
+                    # Get all users details
+
+                    cur_conversation_id = conversations[i]["conversation_id"]
+                    result = conn.execute(text("SELECT * FROM conversation_users WHERE conversation_id = :conversation_id"), {
+                        "conversation_id": cur_conversation_id
+                    }).all()
+
+                    for row in result:
+                        cur_user_id = row.user_id
+                        if not cur_user_id in users_dict:
+                            result = conn.execute(text("SELECT * FROM users WHERE id = :user_id"), {
+                                "user_id": cur_user_id
+                            }).first()
+
+                            users_dict[cur_user_id] = {
+                                "id": result.id,
+                                "name": result.name,
+                                "email": result.email
+                            }
+
+                        conversations[i]["users"].append(users_dict[cur_user_id])
+
+                    # get all messages of current conversation
+                    result = conn.execute(text("SELECT * FROM messages WHERE conversation_id = :conversation_id"), {
+                        "conversation_id": cur_conversation_id
+                    }).all()
+
+                    for row in result:
+                        conversations[i]["messages"].append({
+                            "message": row.message,
+                            "creation_time": row.creation_time,
+                            "sender_name": users_dict[row.sender_id]["name"]
+                        })
+
+                return jsonify(conversations)
+
         except Exception as e:
             print("Failed to get user conversations", e)
             return jsonify({
