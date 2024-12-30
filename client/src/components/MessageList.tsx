@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import MessageHeader from "./MessageHeader"
 import MessageItem from "./MessageItem"
 import MessageInput from "./MessageInput"
+import { Message } from "../types/Message"
+import { SocketContext } from "../main"
 
 
 interface MessageListProps {
@@ -14,11 +16,27 @@ const MessageList = ({
 
     const [userList, setUserList] = useState([])
 
-    const [messageList, setMessageList] = useState([])
+    const [messageList, setMessageList] = useState<Message[]>([])
+
+    const socket = useContext(SocketContext)
 
     useEffect(() => {
         getConversationDetails()
+
+        if (conversation_id) {
+            socket?.on("new_message_created", newMessageHandler)
+
+            return () => {
+                socket?.off("new_message_created", newMessageHandler )
+            }
+        }
+
     }, [conversation_id])
+
+    const newMessageHandler = (data: Message) => {
+        console.log("Client receive new message", data)
+        setMessageList((list) => [...list, data])
+    }
 
     const getConversationDetails = async() => {
         try {

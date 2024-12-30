@@ -16,8 +16,9 @@
     - SQL Alchemy: Object Relational Mapper
     - Dot Env: load and set environment variables
     - Py MySQL: Python MySQL client library
+    - Flask SocketIO: low latency bi-directional communications between the clients and server
     - Bcrypt: password hashing
-    - `pip install flask flask-cors sqlalchemy python-dotenv pymysql bcrypt`
+    - `pip install flask flask-cors sqlalchemy python-dotenv pymysql bcrypt flask-socketio`
   - Run the server `python3 -B main.py`
 - Setup MySQL
   - Download and Install MySQL Community Server
@@ -96,6 +97,11 @@
 - Install Client dependencies: `cd client && npm i`
 - Start the client `npm run dev`
 
+
+# Test
+ - http://localhost:5173/conversations/1
+
+
 # TODO
 
 - Functionalities:
@@ -145,13 +151,15 @@
 - connect api to fetch user conversations [x]
 - connect api to fetch conversation details [x]
 - route logic to display corresponding conversation details [x]
+- add Socket IO for real time chat [x]
+- store Socket IO instance in React Context [x]
+- implement Redux toolkit
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
 - check user and protect client route
 - create useUser hook to fetch all users
 - conversation page, display all chat messages
 - connect create chat api
-- add Socket IO for real time chat
 - create group chat
 - seen receipt
 - active user
