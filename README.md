@@ -136,8 +136,11 @@
   - create room/conversation [x]
   - create chat/message [x]
   - fetch all conversation messages [x]
-  - fetch all user conversations
+  - fetch all user conversations [x]
+- create nav bar component
 - create conversation page
+- create conversationList, conversationListItem components
+- connect api to fetch user conversations
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
 - check user and protect client route
