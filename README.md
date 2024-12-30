@@ -144,6 +144,7 @@
 - create MessageInput component, take input, call createMessage api [x]
 - connect api to fetch user conversations [x]
 - connect api to fetch conversation details [x]
+- route logic to display corresponding conversation details [x]
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
 - check user and protect client route

@@ -4,7 +4,13 @@ import MessageItem from "./MessageItem"
 import MessageInput from "./MessageInput"
 
 
-const MessageList = () => {
+interface MessageListProps {
+    conversation_id: number | undefined
+}
+
+const MessageList = ({
+    conversation_id
+}: MessageListProps) => {
 
     const [userList, setUserList] = useState([])
 
@@ -12,11 +18,12 @@ const MessageList = () => {
 
     useEffect(() => {
         getConversationDetails()
-    }, [])
+    }, [conversation_id])
 
     const getConversationDetails = async() => {
         try {
-            let url = `${import.meta.env.VITE_SERVER_URL}/api/conversations/1/details`
+            if (!conversation_id) return
+            let url = `${import.meta.env.VITE_SERVER_URL}/api/conversations/${conversation_id}/details`
             const res = await fetch(url)
 
             if (res.ok) {

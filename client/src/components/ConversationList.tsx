@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import ConversationListItem from "./ConversationListItem"
+import { Link } from "react-router-dom"
+import { Conversation } from "../types/Conversation"
 
 
 const ConversationList = () => {
 
-    const [conversationList, setConversationList] = useState([])
+    const [conversationList, setConversationList] = useState<Conversation[]>([])
 
     useEffect(() => {
         getUserConversations()
@@ -38,7 +40,9 @@ const ConversationList = () => {
             ):
             conversationList.map((conversation, index) => (
                 <div key={index}>
-                    <ConversationListItem conversation={conversation}/>
+                    <Link to={`/conversations/${conversation.conversation_id}`}>
+                        <ConversationListItem conversation={conversation}/>
+                    </Link>                        
                 </div>
             ))}
         </div>
