@@ -45,16 +45,21 @@ const MessageList = ({
             )}
 
             <div>
-                {messageList.length > 0 ? messageList.map((message, index) => (
-                    <MessageItem message={message} key={index}/>
-                )): (
+                {messageList.length > 0 ? (
+                    <div>
+                        {messageList.map((message, index) => (
+                            <MessageItem message={message} key={index}/>
+                        ))}
+                        <MessageInput conversation_id={conversation_id}/>
+                    </div>
+                )
+              : (
                     <div>
                         Select an existing conversation or start a new conversation
                     </div>
                 )}
             </div>
 
-            <MessageInput/>
             
         </div>
     )

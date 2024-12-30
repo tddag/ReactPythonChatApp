@@ -1,7 +1,13 @@
 import { useState } from "react"
 
 
-const MessageInput = () => {
+interface MessageInputProps {
+    conversation_id: number | undefined
+}
+
+const MessageInput = ({
+    conversation_id
+}: MessageInputProps) => {
 
     const [message, setMessage] = useState("");
 
@@ -22,7 +28,7 @@ const MessageInput = () => {
                 body: JSON.stringify({
                     message,
                     sender_id: 1,
-                    conversation_id: 1
+                    conversation_id: conversation_id
                 })
             })
 
