@@ -1,60 +1,33 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ConversationListItem from "./ConversationListItem"
 
 
 const ConversationList = () => {
 
-    const [conversationList, setConversationList] = useState([
-        {
-            "conversation_id": 1,
-            "messages": [
-                {
-                    "creation_time": "Mon, 30 Dec 2024 10:02:34 GMT",
-                    "message": "This message is from Tom",
-                    "sender_name": "Tom"
-                },
-                {
-                    "creation_time": "Mon, 30 Dec 2024 10:02:43 GMT",
-                    "message": "This message is from Tom. Tom is so cool",
-                    "sender_name": "Tom"
-                }
-            ],
-            "users": [
-                {
-                    "email": "tom@123",
-                    "id": 1,
-                    "name": "Tom"
-                },
-                {
-                    "email": "tom2@123",
-                    "id": 2,
-                    "name": "Tom2"
-                }
-            ]
-        },
-        {
-            "conversation_id": 2,
-            "messages": [
-                {
-                    "creation_time": "Mon, 30 Dec 2024 10:05:42 GMT",
-                    "message": "This message is from Tom. Tom is so cool. Hi Tom3",
-                    "sender_name": "Tom"
-                }
-            ],
-            "users": [
-                {
-                    "email": "tom@123",
-                    "id": 1,
-                    "name": "Tom"
-                },
-                {
-                    "email": "tom3@gmail.com",
-                    "id": 3,
-                    "name": "Tom3"
-                }
-            ]
+    const [conversationList, setConversationList] = useState([])
+
+    useEffect(() => {
+        getUserConversations()
+    }, [])
+
+    const getUserConversations = async () => {
+        try {
+            let url = `${import.meta.env.VITE_SERVER_URL}/api/users/1/conversations`
+
+            let res = await fetch(url)
+
+            if (res.ok) {
+                const conversations = await res.json();
+                console.log("conversations are: ", conversations)
+                setConversationList(conversations);
+                console.log("Fetch user conversations successfully")
+            } else {
+                console.log("Failed to fetch user conversations")
+            }
+        } catch (e) {
+            console.log("Failed to fetch user conversations", e)
         }
-    ])
+    }
 
     return (
         <div>

@@ -44,22 +44,54 @@ def register_routes(app):
             }), 500
         
 
-    # GET - get all conversation messages
-    @app.route("/api/conversations/<int:conversation_id>/messages", methods=["GET"])
-    def get_conversation_messages(conversation_id):
+    # GET - get conversation details
+    @app.route("/api/conversations/<int:conversation_id>/details", methods=["GET"])
+    def get_conversation_details(conversation_id):
         try:
             with engine.connect() as conn:
-                all_messages = conn.execute(text("SELECT messages.*, users.name as user_name FROM messages JOIN users ON sender_id = users.id WHERE conversation_id = :conversation_id"), {
+
+                # Get user list from current conversation
+
+
+                result = conn.execute(text("SELECT * FROM conversation_users WHERE conversation_id = :conversation_id"), {
                     "conversation_id": conversation_id
                 }).all()
+              
 
-                messages = [ {
-                    "message": message.message,
-                    "sender_id": message.sender_id,
-                    "sender_name": message.user_name
-                } for message in all_messages]
 
-                return jsonify(messages)
+                users = []
+                for row in result:
+                
+                    cur_user_id = row.user_id
+                    user = conn.execute(text("SELECT * FROM users WHERE id = :user_id"), {
+                        "user_id": cur_user_id
+                    }).first()
+                    users.append({
+                        "id": user.id,
+                        "name": user.name,
+                        "email": user.email
+                    })
+
+
+                # Get messages from current conversation
+                result = conn.execute(text("SELECT * FROM messages JOIN users ON users.id =  messages.sender_id WHERE conversation_id = :conversation_id"), {
+                    "conversation_id": conversation_id
+                }).all()
+          
+
+                messages = []
+                for row in result:
+                    messages.append({
+                        "message": row.message,
+                        "creation_time": row.creation_time,
+                        "sender_name": row.name
+                    })
+
+                return jsonify({
+                    "conversation_id": conversation_id,
+                    "messages": messages,
+                    "users": users
+                })
         except Exception as e:
             print("Failed to get conversation messages", e)
             return jsonify({

@@ -142,7 +142,8 @@
 - create conversationList, coversationListItem components [x]
 - create MessageList, MessageHeader, MessageItem components [x]
 - create MessageInput component, take input, call createMessage api [x]
-- connect api to fetch user conversations
+- connect api to fetch user conversations [x]
+- connect api to fetch conversation details [x]
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
 - check user and protect client route

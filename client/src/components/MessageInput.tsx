@@ -21,7 +21,7 @@ const MessageInput = () => {
                 },
                 body: JSON.stringify({
                     message,
-                    senderId: 1,
+                    sender_id: 1,
                     conversation_id: 1
                 })
             })

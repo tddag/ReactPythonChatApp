@@ -148,6 +148,7 @@ def register_routes(app):
                     }).all()
 
                     for row in result:
+                        print("Get here 4")
                         cur_user_id = row.user_id
                         if not cur_user_id in users_dict:
                             result = conn.execute(text("SELECT * FROM users WHERE id = :user_id"), {
@@ -168,6 +169,7 @@ def register_routes(app):
                     }).all()
 
                     for row in result:
+                        print("Get here 7")
                         conversations[i]["messages"].append({
                             "message": row.message,
                             "creation_time": row.creation_time,
