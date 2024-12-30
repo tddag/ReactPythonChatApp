@@ -138,8 +138,9 @@
   - fetch all conversation messages [x]
   - fetch all user conversations [x]
 - create nav bar component
-- create conversation page
-- create conversationList, conversationListItem components
+- create conversation page [x]
+- create conversationList, coversationListItem components [x]
+- create MessageList, MessageHeader, MessageItem components
 - connect api to fetch user conversations
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details

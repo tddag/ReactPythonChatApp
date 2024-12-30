@@ -64,7 +64,7 @@ const ConversationList = () => {
                 </div>
             ):
             conversationList.map((conversation, index) => (
-                <div>
+                <div key={index}>
                     <ConversationListItem conversation={conversation}/>
                 </div>
             ))}
