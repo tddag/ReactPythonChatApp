@@ -140,7 +140,8 @@
 - create nav bar component
 - create conversation page [x]
 - create conversationList, coversationListItem components [x]
-- create MessageList, MessageHeader, MessageItem components
+- create MessageList, MessageHeader, MessageItem components [x]
+- create MessageInput component, take input, call createMessage api [x]
 - connect api to fetch user conversations
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details

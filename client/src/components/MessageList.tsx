@@ -1,6 +1,7 @@
 import { useState } from "react"
 import MessageHeader from "./MessageHeader"
 import MessageItem from "./MessageItem"
+import MessageInput from "./MessageInput"
 
 
 const MessageList = () => {
@@ -48,6 +49,8 @@ const MessageList = () => {
                     </div>
                 )}
             </div>
+
+            <MessageInput/>
             
         </div>
     )
