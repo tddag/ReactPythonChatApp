@@ -164,6 +164,8 @@
 - display own messages on the right, other on the left [x]
 - conversation page, display all chat messages [x]
 - connect create chat api [x]
+- auto scroll to the bottom
+- persistent state storage
 - create group chat
 - seen receipt
 - active user

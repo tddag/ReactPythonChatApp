@@ -23,10 +23,12 @@ const NavBar = () => {
                     <Link to="/conversations">
                         Conversation
                     </Link>
+                    { currentUser && (
+                        <Link to="/signin">
+                            <button onClick={handleSignOut}>Sign Out</button>
+                        </Link>
+                    )}
 
-                    <Link to="/signin">
-                        <button onClick={handleSignOut}>Sign Out</button>
-                    </Link>
                 </div>
             </div>
         </div>
