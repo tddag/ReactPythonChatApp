@@ -6,6 +6,7 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import Conversations from './pages/Conversations'
 import NavBar from './components/NavBar'
+import ProtectedRoute from './components/ProtectedRoute'
 function App() {
 
   return (
@@ -16,8 +17,12 @@ function App() {
         <Routes>
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>
-          <Route path="/conversations" element={<Conversations/>}/>
-          <Route path="/conversations/:id" element={<Conversations/>}/>
+          <Route element={<ProtectedRoute/>}>
+            <Route path="/" element={<Conversations/>}/>
+            <Route path="/conversations" element={<Conversations/>}/>
+            <Route path="/conversations/:id" element={<Conversations/>}/>
+          </Route>
+          
         </Routes>
       </div>
     </>

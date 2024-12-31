@@ -2,11 +2,15 @@ import { useEffect, useState } from "react"
 import ConversationListItem from "./ConversationListItem"
 import { Link } from "react-router-dom"
 import { Conversation } from "../types/Conversation"
+import { useSelector } from "react-redux"
+import { RootState } from "../state/store"
 
 
 const ConversationList = () => {
 
     const [conversationList, setConversationList] = useState<Conversation[]>([])
+
+    const { currentUser } = useSelector((state: RootState) => state.user)
 
     useEffect(() => {
         getUserConversations()
@@ -14,9 +18,14 @@ const ConversationList = () => {
 
     const getUserConversations = async () => {
         try {
-            let url = `${import.meta.env.VITE_SERVER_URL}/api/users/1/conversations`
+            let url = `${import.meta.env.VITE_SERVER_URL}/api/users/${currentUser?.id}/conversations`
 
-            let res = await fetch(url)
+            let res = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${currentUser?.access_token}`
+                }
+            })
 
             if (res.ok) {
                 const conversations = await res.json();

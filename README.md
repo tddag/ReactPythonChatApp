@@ -107,6 +107,8 @@
 
 - Functionalities:
   - JWT Authentication
+  - Protected APIs
+  - Protected Client Routes
   - Real-time messaging
   - Search User by Name/Email
   - Get all existing chats between users
@@ -155,6 +157,7 @@
 - add Socket IO for real time chat [x]
 - store Socket IO instance in React Context [x]
 - create NavBar component [x]
+- protect client routes
 - implement Redux toolkit
 - implement JWT to protect apis [x]
 - create redux toolkit to store user logged in details
@@ -169,4 +172,4 @@
 
 # Test
 
-- http://localhost:5173/conversations/1
+http://localhost:5173/conversations/1

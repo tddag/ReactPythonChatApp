@@ -1,5 +1,7 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom"
+import { signInSuccess } from "../state/user/userSlice";
 
 
 interface UserFormInput {
@@ -15,6 +17,7 @@ const SignIn = () => {
     })
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleFormInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormInputData((prevState: UserFormInput) => ({...prevState, [e.target.id]: e.target.value}))
@@ -34,6 +37,7 @@ const SignIn = () => {
 
             if (res.ok) {
                 res = await res.json();
+                dispatch(signInSuccess(res))
                 navigate("/")
             } else {
                 console.log("Failed to log in user")

@@ -4,6 +4,8 @@ import MessageItem from "./MessageItem"
 import MessageInput from "./MessageInput"
 import { Message } from "../types/Message"
 import { SocketContext } from "../main"
+import { useSelector } from "react-redux"
+import { RootState } from "../state/store"
 
 
 interface MessageListProps {
@@ -17,6 +19,8 @@ const MessageList = ({
     const [userList, setUserList] = useState([])
 
     const [messageList, setMessageList] = useState<Message[]>([])
+
+    const { currentUser } = useSelector((state: RootState) => state.user)
 
     const socket = useContext(SocketContext)
 
@@ -46,7 +50,12 @@ const MessageList = ({
                 return
             }
             let url = `${import.meta.env.VITE_SERVER_URL}/api/conversations/${conversation_id}/details`
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${currentUser?.access_token}`
+                }             
+            })
 
             if (res.ok) {
                 const conversationDetails = await res.json();

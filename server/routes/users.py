@@ -1,6 +1,7 @@
 from flask import request, jsonify
 from database import engine
 from sqlalchemy import text
+import datetime
 import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required
 
@@ -72,7 +73,7 @@ def register_routes(app):
                 return jsonify({
                     "error": "Please add required fields"
                 }), 400
-            
+            print("Get here 1")
             with engine.connect() as conn:
                 query = text("SELECT * FROM users WHERE email = :email")
                 existingUser = conn.execute(query, {"email": email}).fetchone()
@@ -87,10 +88,13 @@ def register_routes(app):
                             "error": "Incorrect Password"
                         }), 400
                     else:
+                        print("Get here 2")    
+                        print("Email is: ", existingUser.email, type(existingUser.email))                    
                         return jsonify({
+                            "id": existingUser.id,
                             "name": existingUser.name,
                             "email": existingUser.email,
-                            "access_token": create_access_token(identity=existingUser.email)
+                            "access_token": create_access_token(identity=existingUser.email, expires_delta=datetime.timedelta(minutes=120))
                         }), 200
 
         except Exception as e:

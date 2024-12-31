@@ -1,4 +1,6 @@
 import { useState } from "react"
+import { useSelector } from "react-redux";
+import { RootState } from "../state/store";
 
 interface MessageInputProps {
     conversation_id: number | undefined
@@ -9,6 +11,8 @@ const MessageInput = ({
 }: MessageInputProps) => {
 
     const [message, setMessage] = useState("");
+
+    const { currentUser } = useSelector((state: RootState) => state.user)
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value)
@@ -22,7 +26,9 @@ const MessageInput = ({
             let res = await fetch(url, {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${currentUser?.access_token}`
+                 
                 },
                 body: JSON.stringify({
                     message,

@@ -1,3 +1,4 @@
+import datetime
 from flask import Flask
 from flask_cors import CORS
 from flask_socketio import SocketIO
@@ -8,9 +9,9 @@ from flask_jwt_extended import JWTManager
 app = Flask(__name__)
 load_dotenv()
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")
-jwt = JWTManager(app)
 CORS(app)
 socketio = SocketIO(app, logger=True, cors_allowed_origins="*")
+jwt = JWTManager(app)
 
 @app.route("/")
 def home():
