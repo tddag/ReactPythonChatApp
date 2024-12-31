@@ -1,11 +1,14 @@
 from flask import request, jsonify
 from database import engine
 from sqlalchemy import text
+from flask_jwt_extended import jwt_required
+
 
 def register_routes(app, socket):
 
     # POST - create a new message
     @app.route("/api/messages", methods=["POST"])
+    @jwt_required()
     def create_message():
         try:
             data = request.json

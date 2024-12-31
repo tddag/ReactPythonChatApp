@@ -18,7 +18,8 @@
     - Py MySQL: Python MySQL client library
     - Flask SocketIO: low latency bi-directional communications between the clients and server
     - Bcrypt: password hashing
-    - `pip install flask flask-cors sqlalchemy python-dotenv pymysql bcrypt flask-socketio`
+    - Flask JWT Extended: provide JWT support
+    - `pip install flask flask-cors sqlalchemy python-dotenv pymysql bcrypt flask-socketio flask-jwt-extended`
   - Run the server `python3 -B main.py`
 - Setup MySQL
   - Download and Install MySQL Community Server
@@ -79,7 +80,12 @@
             <td>DATABASE_URL</td>
             <td>mysql+pymysql://root:abc.....@localhost:3306/reactPythonChatAppDB?charset=utf8mb4</td>
             <td>MySQL Database URL</td>
-        </tr>
+        </tr>JWT_SECRET_KEY
+        <tr>
+            <td>JWT_SECRET_KEY</td>
+            <td>...</td>
+            <td>JWT Secret Key</td>
+        </tr>        
     </table>
 - Set up client enviroment variables (./client/.env):
   - <table>
@@ -96,10 +102,6 @@
     </table>
 - Install Client dependencies: `cd client && npm i`
 - Start the client `npm run dev`
-
-# Test
-
-- http://localhost:5173/conversations/1
 
 # TODO
 
@@ -154,7 +156,7 @@
 - store Socket IO instance in React Context [x]
 - create NavBar component [x]
 - implement Redux toolkit
-- implement JWT to protect apis
+- implement JWT to protect apis [x]
 - create redux toolkit to store user logged in details
 - check user and protect client route
 - create useUser hook to fetch all users
@@ -164,3 +166,7 @@
 - seen receipt
 - active user
 - search user
+
+# Test
+
+- http://localhost:5173/conversations/1

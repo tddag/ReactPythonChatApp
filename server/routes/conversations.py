@@ -1,11 +1,14 @@
 from flask import request, jsonify
 from database import engine
 from sqlalchemy import text
+from flask_jwt_extended import jwt_required
+
 
 def register_routes(app):
 
     # POST - create a conversation
     @app.route("/api/conversation", methods=["POST"])
+    @jwt_required()
     def create_conversation():
         try:
             data = request.json
@@ -46,6 +49,7 @@ def register_routes(app):
 
     # GET - get conversation details
     @app.route("/api/conversations/<int:conversation_id>/details", methods=["GET"])
+    @jwt_required()
     def get_conversation_details(conversation_id):
         try:
             with engine.connect() as conn:

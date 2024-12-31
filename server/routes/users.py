@@ -2,6 +2,7 @@ from flask import request, jsonify
 from database import engine
 from sqlalchemy import text
 import bcrypt
+from flask_jwt_extended import create_access_token, jwt_required
 
 def register_routes(app):
 
@@ -88,7 +89,8 @@ def register_routes(app):
                     else:
                         return jsonify({
                             "name": existingUser.name,
-                            "email": existingUser.email
+                            "email": existingUser.email,
+                            "access_token": create_access_token(identity=existingUser.email)
                         }), 200
 
         except Exception as e:
@@ -100,11 +102,11 @@ def register_routes(app):
         
     # GET - get all users
     @app.route("/api/users", methods=["GET"])
+    @jwt_required()
     def get_all_users():
         try:
             with engine.connect() as conn:
                 allUsers = conn.execute(text("SELECT * FROM users")).all()
-
 
                 users = [ {
                     "id": row.id,
@@ -124,6 +126,7 @@ def register_routes(app):
     
     # GET - get user conversations
     @app.route("/api/users/<int:user_id>/conversations", methods=["GET"])
+    @jwt_required()
     def get_user_conversations(user_id):
         try:
             with engine.connect() as conn:
