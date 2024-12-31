@@ -40,7 +40,11 @@ const MessageList = ({
 
     const getConversationDetails = async() => {
         try {
-            if (!conversation_id) return
+            if (!conversation_id) {
+                setUserList([])
+                setMessageList([])                
+                return
+            }
             let url = `${import.meta.env.VITE_SERVER_URL}/api/conversations/${conversation_id}/details`
             const res = await fetch(url)
 
@@ -68,7 +72,6 @@ const MessageList = ({
                         {messageList.map((message, index) => (
                             <MessageItem message={message} key={index}/>
                         ))}
-                        <MessageInput conversation_id={conversation_id}/>
                     </div>
                 )
               : (
@@ -77,6 +80,8 @@ const MessageList = ({
                     </div>
                 )}
             </div>
+
+            <MessageInput conversation_id={conversation_id}/>
 
             
         </div>

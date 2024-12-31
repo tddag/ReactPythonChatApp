@@ -97,10 +97,9 @@
 - Install Client dependencies: `cd client && npm i`
 - Start the client `npm run dev`
 
-
 # Test
- - http://localhost:5173/conversations/1
 
+- http://localhost:5173/conversations/1
 
 # TODO
 
@@ -153,6 +152,7 @@
 - route logic to display corresponding conversation details [x]
 - add Socket IO for real time chat [x]
 - store Socket IO instance in React Context [x]
+- create NavBar component [x]
 - implement Redux toolkit
 - implement JWT to protect apis
 - create redux toolkit to store user logged in details
