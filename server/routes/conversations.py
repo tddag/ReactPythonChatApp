@@ -88,7 +88,8 @@ def register_routes(app):
                     messages.append({
                         "message": row.message,
                         "creation_time": row.creation_time,
-                        "sender_name": row.name
+                        "sender_name": row.name,
+                        "sender_id": row.sender_id
                     })
 
                 return jsonify({

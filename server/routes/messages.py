@@ -34,6 +34,7 @@ def register_routes(app, socket):
                 socket.emit("new_message_created", {
                     "message": new_message.message,
                     "sender_name": new_message.sender_name,
+                    "sender_id": new_message.sender_id,
                     "creation_time": new_message.creation_time.isoformat()
                 })              
 

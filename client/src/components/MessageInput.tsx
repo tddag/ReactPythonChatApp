@@ -32,7 +32,7 @@ const MessageInput = ({
                 },
                 body: JSON.stringify({
                     message,
-                    sender_id: 1,
+                    sender_id: currentUser?.id,
                     conversation_id: conversation_id
                 })
             })

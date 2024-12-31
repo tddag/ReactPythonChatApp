@@ -1,11 +1,14 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { Link } from "react-router-dom"
 import { reset } from "../state/user/userSlice";
+import { RootState } from "../state/store";
 
 
 const NavBar = () => {
 
     const dispatch = useDispatch();
+
+    const { currentUser } = useSelector((state: RootState) => state.user)
 
     const handleSignOut = () => {
         dispatch(reset())
@@ -16,7 +19,7 @@ const NavBar = () => {
             
             <div>
                 <div className="flex gap-4 items-center">
-                    <span>Hi</span>
+                    <span>Hi {currentUser?.name}</span>
                     <Link to="/conversations">
                         Conversation
                     </Link>

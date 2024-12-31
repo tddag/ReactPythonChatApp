@@ -157,14 +157,13 @@
 - add Socket IO for real time chat [x]
 - store Socket IO instance in React Context [x]
 - create NavBar component [x]
-- protect client routes
-- implement Redux toolkit
+- implement Redux toolkit to store currentUser details [x]
+- check currentUser details and protect client routes [x]
 - implement JWT to protect apis [x]
-- create redux toolkit to store user logged in details
-- check user and protect client route
 - create useUser hook to fetch all users
-- conversation page, display all chat messages
-- connect create chat api
+- display own messages on the right, other on the left [x]
+- conversation page, display all chat messages [x]
+- connect create chat api [x]
 - create group chat
 - seen receipt
 - active user

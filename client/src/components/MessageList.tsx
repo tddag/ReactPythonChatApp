@@ -68,21 +68,19 @@ const MessageList = ({
     }
 
     return (
-        <div>
+        <div className="relative w-5/6">
             {userList.length > 0 && (
                 <div>
                     <MessageHeader userList={userList}/>
                 </div>
             )}
 
-            <div>
-                {messageList.length > 0 ? (
-                    <div>
-                        {messageList.map((message, index) => (
-                            <MessageItem message={message} key={index}/>
-                        ))}
-                    </div>
-                )
+            <div className="relative flex flex-col  overflow-auto md:mr-10 gap-3 h-5/6 ">
+                {messageList.length > 0 ?
+                    messageList.map((message, index) => (
+                        <MessageItem message={message} key={index}/>
+                    ))
+                
               : (
                     <div>
                         Select an existing conversation or start a new conversation

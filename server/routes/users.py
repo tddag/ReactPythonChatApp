@@ -178,7 +178,8 @@ def register_routes(app):
                         conversations[i]["messages"].append({
                             "message": row.message,
                             "creation_time": row.creation_time,
-                            "sender_name": users_dict[row.sender_id]["name"]
+                            "sender_name": users_dict[row.sender_id]["name"],
+                            "sender_id": row.sender_id
                         })
 
                 return jsonify(conversations)

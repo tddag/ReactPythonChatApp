@@ -8,7 +8,7 @@ const Conversations = () => {
   const { id } = useParams();
   
   return (
-    <div className="flex gap-2 md-gap-4 mb-10 h-screen-minus-header-extra md:h-screen-minus-header">
+    <div className="flex gap-2 md-gap-4  h-5/6">
         <ConversationList/>
 
         <MessageList conversation_id={id ? parseInt(id) : undefined}/>
