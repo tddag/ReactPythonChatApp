@@ -103,6 +103,19 @@
 - Install Client dependencies: `cd client && npm i`
 - Start the client `npm run dev`
 
+
+# "Seen" logic
+- User creates a new message 
+  - -> call create_message api 
+  - -> add sender in the seen_users table (message_id, user_id) 
+  - -> message created successfully will fire socket event "new_message_created" { message_id, conversation_id, seen_users}
+- Other online users in the same conversation receives "new_message_created" event
+  - -> call api messageSeen (message_id, user_id)
+  - -> add user_id in the seen_users table (message_id, user_id)
+  - -> fire socket event "seen_users_updated" { message_id, conversation_id, seen_users}
+- 
+
+
 # TODO
 
 - Functionalities:
@@ -170,6 +183,7 @@
 - seen receipt
 - active user
 - search user
+- handle issue if user not in same conversation but still receive new_message_created socket event
 
 # Test
 
