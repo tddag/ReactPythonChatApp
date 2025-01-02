@@ -69,6 +69,17 @@
         creation_time DATETIME DEFAULT NOW()
     );
   ```
+  - Create Seen Users table
+  ```
+    CREATE TABLE seen_users (
+      id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+      message_id INT,
+      user_id INT,
+      FOREIGN KEY (message_id) REFERENCES messages(id),
+      FOREIGN KEY (user_id) REFERENCES users(id),
+      creation_time DATETIME DEFAULT NOW()
+    );
+  ```
 - Set up server enviroment variables (./server/.env):
   - <table>
         <tr>
@@ -103,18 +114,22 @@
 - Install Client dependencies: `cd client && npm i`
 - Start the client `npm run dev`
 
-
 # "Seen" logic
-- User creates a new message 
-  - -> call create_message api 
-  - -> add sender in the seen_users table (message_id, user_id) 
-  - -> message created successfully will fire socket event "new_message_created" { message_id, conversation_id, seen_users}
-- Other online users in the same conversation receives "new_message_created" event
-  - -> call api messageSeen (message_id, user_id)
-  - -> add user_id in the seen_users table (message_id, user_id)
-  - -> fire socket event "seen_users_updated" { message_id, conversation_id, seen_users}
-- 
 
+- User creates a new message
+  - -> call create_message api [x]
+  - -> add sender in the seen_users table (message_id, user_id) [x]
+  - -> message created successfully will fire socket event "new_message_created" { message_id, conversation_id, seen_users} [x]
+    - Other online users in the same conversation receives "new_message_created" event [x]
+      - -> add new message to the messageList [x]
+      - -> call api messageSeen (message_id, user_id) [x]
+      - -> add user_id in the seen_users table (message_id, user_id) [x]
+      - -> fire socket event "seen_users_updated" { message_id, conversation_id, seen_users} [x]
+        - Other online users same conversation, last message, listen on event "seen_users_updated" [x]
+          -> reload data by call getConversationDetails api [x]
+- user logs in and loads conversation [x]
+  - if cur user not in the seenUsers in the last message [x]
+    - call api messageSeen same as above [x]
 
 # TODO
 
@@ -180,7 +195,7 @@
 - auto scroll to the bottom
 - persistent state storage
 - create group chat
-- seen receipt
+- seen receipt [x]
 - active user
 - search user
 - handle issue if user not in same conversation but still receive new_message_created socket event

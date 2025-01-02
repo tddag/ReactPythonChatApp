@@ -4,14 +4,17 @@ import { RootState } from "../state/store"
 
 
 interface MessageItemProps {
-    message: Message
+    message: Message,
+    isLast: Boolean
 }
 
 const MessageItem = ({
-    message
+    message,
+    isLast
 }: MessageItemProps) => {
 
     const { currentUser } = useSelector((state: RootState) => state.user)
+
 
     return (
         <div className={"flex " + (currentUser?.id == message.sender_id ? "justify-end" : "")}>
@@ -23,6 +26,12 @@ const MessageItem = ({
                 <div className={"flex " + (currentUser?.id == message.sender_id ? "justify-end": "")}>
                     {new Date(message.creation_time).toLocaleDateString("en")}
                 </div>
+
+                {(message.seen_users && message.seen_users.length > 0 && isLast) && (
+                    <div className={"text-xs font-light text-gray-500 flex " + (currentUser?.id == message.sender_id ? "justify-end": "")}>
+                        Seen by {message.seen_users.map(user => user.name).join(", ")}
+                    </div>
+                )}
             </div>
         </div>
     )

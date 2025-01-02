@@ -29,17 +29,60 @@ const MessageList = ({
 
         if (conversation_id) {
             socket?.on("new_message_created", newMessageHandler)
+            socket?.on("seen_users_updated", seenUsersUpdatedHandler)
 
             return () => {
-                socket?.off("new_message_created", newMessageHandler )
+                socket?.off("new_message_created", newMessageHandler)
+                socket?.off("seen_users_updated", seenUsersUpdatedHandler)
+
             }
         }
 
     }, [conversation_id])
 
     const newMessageHandler = (data: Message) => {
-        console.log("Client receive new message", data)
+        console.log("Client receive new message", data, "Current user id is: ", currentUser?.id)
+
+        const seen_users = data.seen_users;
         setMessageList((list) => [...list, data])
+
+        if (seen_users) {
+            let isUserAlreadySeen = false
+            for (let user of seen_users) {
+                if (user.id == currentUser?.id) {
+                    isUserAlreadySeen = true
+                }
+            }
+            if (!isUserAlreadySeen) {
+                let url = `${import.meta.env.VITE_SERVER_URL}/api/messages/${data.id}/seen`
+                fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${currentUser?.access_token}`
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser?.id
+                    })                         
+                })
+            }
+        }
+    }
+
+    const seenUsersUpdatedHandler = (data: Message) => {
+        console.log("Client receive seenUsersUpdated event", data)
+        getConversationDetails()
+
+        // let newMessageList = JSON.parse(JSON.stringify(messageList))
+        // console.log("New Message List 1: ", newMessageList)
+
+        // for (let i = 0; i < newMessageList.length; i++) {
+        //     if (newMessageList[i].id == data.id) {
+        //         newMessageList[i].seen_users = data.seen_users;
+        //     }
+        // }
+        // console.log("New Message List 2: ", newMessageList)
+        // setMessageList(newMessageList)
     }
 
     const getConversationDetails = async() => {
@@ -61,6 +104,31 @@ const MessageList = ({
                 const conversationDetails = await res.json();
                 setUserList(conversationDetails.users)
                 setMessageList(conversationDetails.messages)
+
+                let lastMessage = conversationDetails.messages[conversationDetails.messages.length - 1]
+                let seen_users = lastMessage.seen_users;
+                if (seen_users) {
+                    let isUserAlreadySeen = false
+                    for (let user of seen_users) {
+                        if (user.id == currentUser?.id) {
+                            isUserAlreadySeen = true
+                        }
+                    }
+                    if (!isUserAlreadySeen) {
+                        let url = `${import.meta.env.VITE_SERVER_URL}/api/messages/${lastMessage.id}/seen`
+                        fetch(url, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "Authorization": `Bearer ${currentUser?.access_token}`
+                            },
+                            body: JSON.stringify({
+                                user_id: currentUser?.id
+                            })                         
+                        })
+                    }
+                }                
+
             }
         } catch (e) {
             console.log("Failed to get conversation details", e)
@@ -78,7 +146,7 @@ const MessageList = ({
             <div className="relative flex flex-col  overflow-auto md:mr-10 gap-3 h-5/6 ">
                 {messageList.length > 0 ?
                     messageList.map((message, index) => (
-                        <MessageItem message={message} key={index}/>
+                        <MessageItem message={message} key={index} isLast={index == messageList.length - 1 ? true : false}/>
                     ))
                 
               : (

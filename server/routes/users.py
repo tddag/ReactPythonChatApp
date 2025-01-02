@@ -174,13 +174,28 @@ def register_routes(app):
                         "conversation_id": cur_conversation_id
                     }).all()
 
-                    for row in result:
-                        conversations[i]["messages"].append({
-                            "message": row.message,
-                            "creation_time": row.creation_time,
-                            "sender_name": users_dict[row.sender_id]["name"],
-                            "sender_id": row.sender_id
-                        })
+                    # for row in result:
+                    for j in range(len(result)):
+                        message = {
+                            "message": result[j].message,
+                            "creation_time": result[j].creation_time,
+                            "sender_name": users_dict[result[j].sender_id]["name"],
+                            "sender_id": result[j].sender_id,
+                            "seen_users": []
+                        }
+                        if j == len(result) - 1:
+                            # if last message, get all seen users
+                            allSeenUsers = conn.execute(text("SELECT users.id, users.name, users.email FROM seen_users JOIN users ON seen_users.user_id = users.id WHERE  message_id = :message_id"), {
+                                "message_id": result[j].id
+                            }).all()
+                            for user in allSeenUsers:
+                                message["seen_users"].append({
+                                    "id": user.id,
+                                    "name": user.name,
+                                    "email": user.email
+                                })
+                            
+                        conversations[i]["messages"].append(message)
 
                 return jsonify(conversations)
 

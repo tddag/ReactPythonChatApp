@@ -78,20 +78,37 @@ def register_routes(app):
 
 
                 # Get messages from current conversation
-                result = conn.execute(text("SELECT * FROM messages JOIN users ON users.id =  messages.sender_id WHERE conversation_id = :conversation_id"), {
+                result = conn.execute(text("SELECT messages.*, users.name FROM messages JOIN users ON users.id =  messages.sender_id WHERE conversation_id = :conversation_id ORDER BY messages.creation_time" ), {
                     "conversation_id": conversation_id
                 }).all()
           
 
                 messages = []
-                for row in result:
-                    messages.append({
-                        "message": row.message,
-                        "creation_time": row.creation_time,
-                        "sender_name": row.name,
-                        "sender_id": row.sender_id
-                    })
+                # for row in result:
+                for j in range(len(result)):
+                    message = {
+                        "id": result[j].id,
+                        "message": result[j].message,
+                        "creation_time": result[j].creation_time,
+                        "sender_name": result[j].name,
+                        "sender_id": result[j].sender_id,
+                        "seen_users": []
+                    }     
+                    if j == len(result) - 1:
+                        # if last message, get all seen users
+                        allSeenUsers = conn.execute(text("SELECT users.id, users.name, users.email FROM seen_users JOIN users ON seen_users.user_id = users.id WHERE  message_id = :message_id"), {
+                            "message_id": result[j].id
+                        }).all()
+                        if (len(allSeenUsers) > 0): 
+                            for user in allSeenUsers:
+                                message["seen_users"].append({
+                                    "id": user.id,
+                                    "name": user.name,
+                                    "email": user.email
+                                })      
 
+                    messages.append(message)
+                            
                 return jsonify({
                     "conversation_id": conversation_id,
                     "messages": messages,
