@@ -4,7 +4,7 @@ from sqlalchemy import text
 from flask_jwt_extended import jwt_required
 
 
-def register_routes(app, socket):
+def register_routes(app, socketio):
 
     # POST - create a new message
     @app.route("/api/messages", methods=["POST"])
@@ -57,7 +57,7 @@ def register_routes(app, socket):
                         "email": user.email
                     })
 
-                socket.emit("new_message_created", message)              
+                socketio.emit("new_message_created", message)              
 
 
                 return jsonify({
@@ -108,7 +108,7 @@ def register_routes(app, socket):
                         "email": user.email
                     })  
 
-                socket.emit("seen_users_updated", {
+                socketio.emit("seen_users_updated", {
                     "message_id": message_id,
                     "seen_users": seen_users
                 })

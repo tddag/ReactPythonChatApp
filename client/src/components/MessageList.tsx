@@ -3,9 +3,9 @@ import MessageHeader from "./MessageHeader"
 import MessageItem from "./MessageItem"
 import MessageInput from "./MessageInput"
 import { Message } from "../types/Message"
-import { SocketContext } from "../main"
 import { useSelector } from "react-redux"
 import { RootState } from "../state/store"
+import { SocketContext } from "../pages/Conversations"
 
 
 interface MessageListProps {

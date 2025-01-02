@@ -131,6 +131,20 @@
   - if cur user not in the seenUsers in the last message [x]
     - call api messageSeen same as above [x]
 
+# "Active" logic
+
+- Client connecting will send user details [x]
+- Server receives event "connect" [x]
+  - Server emits event "user_connected" {user_id}
+    - Client UserAvatar component listens on "new_active_user"
+- Server receives event "disconnect"
+  - Server removes user_id from the list
+  - Server emit event "user_disconnected"
+    - Client UserAvatar component listens on "user_disconnected"
+- api to get list of active user ids
+- Server stores user details in a dict
+- Client logs in, call api getActiveUsers, check and display UserAvatar accordingly
+
 # TODO
 
 - Functionalities:
