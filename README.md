@@ -135,15 +135,14 @@
 
 - Client connecting will send user details [x]
 - Server receives event "connect" [x]
-  - Server emits event "user_connected" {user_id}
-    - Client UserAvatar component listens on "new_active_user"
-- Server receives event "disconnect"
-  - Server removes user_id from the list
-  - Server emit event "user_disconnected"
-    - Client UserAvatar component listens on "user_disconnected"
-- api to get list of active user ids
-- Server stores user details in a dict
-- Client logs in, call api getActiveUsers, check and display UserAvatar accordingly
+  - Server emits event "user_connected" {user_id} [x]
+    - Client useUsers hook listens on "user_connected" [x]
+- Server receives event "disconnect" [x]
+  - Server removes user_id from the list [x]
+  - Server emit event "user_disconnected" [x]
+    - Client useUsers hook listens on "user_disconnected" [x]
+- Server stores user details in a dict, pass this dict to getUsers api [x]
+- Client logs in, call api getActiveUsers, check and display UserAvatar accordingly [x]
 
 # TODO
 
@@ -202,17 +201,22 @@
 - implement Redux toolkit to store currentUser details [x]
 - check currentUser details and protect client routes [x]
 - implement JWT to protect apis [x]
-- create useUser hook to fetch all users
 - display own messages on the right, other on the left [x]
 - conversation page, display all chat messages [x]
 - connect create chat api [x]
+- seen receipt [x]
+- create User Avatar component [x]
+- create useUser hook to fetch all users [x]
+- create Users page [x]
+- active user [x]
+
+- click User will call api to create new conversation or return existing conversation
 - auto scroll to the bottom
 - persistent state storage
 - create group chat
-- seen receipt [x]
-- active user
 - search user
 - handle issue if user not in same conversation but still receive new_message_created socket event
+- move socket instance to redux store to handle log out functionality
 
 # Test
 

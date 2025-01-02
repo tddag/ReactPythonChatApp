@@ -20,13 +20,20 @@ const NavBar = () => {
             <div>
                 <div className="flex gap-4 items-center">
                     <span>Hi {currentUser?.name}</span>
-                    <Link to="/conversations">
-                        Conversation
-                    </Link>
+
                     { currentUser && (
-                        <Link to="/signin">
-                            <button onClick={handleSignOut}>Sign Out</button>
-                        </Link>
+                        <div className="flex gap-4 items-center">
+                            <Link to="/conversations">
+                                Conversation
+                            </Link>    
+                            <Link to="/users">
+                                Users
+                            </Link>                                                    
+                            <Link to="/signin">
+                                <button onClick={handleSignOut}>Sign Out</button>
+                            </Link>                        
+                        </div>
+
                     )}
 
                 </div>

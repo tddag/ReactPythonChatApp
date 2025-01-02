@@ -7,6 +7,8 @@ import SignUp from './pages/SignUp'
 import Conversations from './pages/Conversations'
 import NavBar from './components/NavBar'
 import ProtectedRoute from './components/ProtectedRoute'
+import Users from './pages/Users'
+import Home from './pages/Home'
 function App() {
 
   return (
@@ -18,9 +20,12 @@ function App() {
           <Route path="/signin" element={<SignIn/>}/>
           <Route path="/signup" element={<SignUp/>}/>
           <Route element={<ProtectedRoute/>}>
-            <Route path="/" element={<Conversations/>}/>
-            <Route path="/conversations" element={<Conversations/>}/>
-            <Route path="/conversations/:id" element={<Conversations/>}/>
+            <Route element={<Home/>}>
+              <Route path="/" element={<Conversations/>}/>
+              <Route path="/conversations" element={<Conversations/>}/>
+              <Route path="/conversations/:id" element={<Conversations/>}/>
+              <Route path="/users" element={<Users/>}/>            
+            </Route>
           </Route>
           
         </Routes>

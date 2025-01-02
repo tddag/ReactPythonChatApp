@@ -5,7 +5,7 @@ import datetime
 import bcrypt
 from flask_jwt_extended import create_access_token, jwt_required
 
-def register_routes(app):
+def register_routes(app, active_users_id):
 
     # POST - register new user
     @app.route("/api/users", methods=["POST"])
@@ -109,13 +109,15 @@ def register_routes(app):
     @jwt_required()
     def get_all_users():
         try:
+            print("active users list is: ", active_users_id)
             with engine.connect() as conn:
                 allUsers = conn.execute(text("SELECT * FROM users")).all()
 
                 users = [ {
                     "id": row.id,
                     "name": row.name,
-                    "email": row.email
+                    "email": row.email,
+                    "is_online": True if active_users_id.get(str(row.id)) else False
                 } for row in allUsers]
                 if allUsers:
                     return jsonify(users), 200

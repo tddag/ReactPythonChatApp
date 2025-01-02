@@ -5,7 +5,7 @@ import MessageInput from "./MessageInput"
 import { Message } from "../types/Message"
 import { useSelector } from "react-redux"
 import { RootState } from "../state/store"
-import { SocketContext } from "../pages/Conversations"
+import { SocketContext } from "../pages/Home"
 
 
 interface MessageListProps {

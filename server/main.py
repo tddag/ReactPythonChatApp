@@ -17,13 +17,13 @@ jwt = JWTManager(app)
 def home():
     return "Hello! This is main page"
 
+active_users_id = {}
+
+
 from routes import users, conversations, messages
-users.register_routes(app)
+users.register_routes(app, active_users_id)
 conversations.register_routes(app)
 messages.register_routes(app, socketio)
-
-
-active_users_id = {}
 
 @socketio.on('connect')
 def handle_connect():
@@ -34,17 +34,26 @@ def handle_connect():
     active_users_id[query_data["user_id"]] = True
     print("Active users are: ", active_users_id)
 
+    socketio.emit("user_connected", {
+        "id": query_data["user_id"]
+    })
+
 
 @socketio.on('disconnect')
 def handle_disconnect():
     print("Server - Socket disconnected")
     sid = request.sid
     print(f"Client {sid} disconnected")
+
     query_data = request.args.to_dict()
     print("Query Data is: ", query_data) 
-    if (active_users_id[query_data["user_id"]]):
-        active_users_id.pop(query_data["user_id"])
+
+    active_users_id.pop(query_data["user_id"], None)
     print("Active users are: ", active_users_id)
+
+    socketio.emit("user_disconnected", {
+        "id": query_data["user_id"]
+    })
 
 
 
