@@ -24,7 +24,8 @@ const MessageItem = ({
                 </div>
 
                 <div className={"flex " + (currentUser?.id == message.sender_id ? "justify-end": "")}>
-                    {new Date(message.creation_time).toLocaleDateString("en")}
+                    {/* {new Date(message.creation_time).toLocaleDateString("en")} */}
+                    {message.creation_time}
                 </div>
 
                 {(message.seen_users && message.seen_users.length > 0 && isLast) && (

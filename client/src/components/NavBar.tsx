@@ -29,7 +29,7 @@ const NavBar = () => {
                             <Link to="/users">
                                 Users
                             </Link>                                                    
-                            <Link to="/signin">
+                            <Link to="/signin" className="bg-red-200 p-2 rounded-lg">
                                 <button onClick={handleSignOut}>Sign Out</button>
                             </Link>                        
                         </div>

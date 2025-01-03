@@ -6,6 +6,7 @@ import { Message } from "../types/Message"
 import { useSelector } from "react-redux"
 import { RootState } from "../state/store"
 import { SocketContext } from "../pages/Home"
+import { User } from "../types/User"
 
 
 interface MessageListProps {
@@ -108,6 +109,8 @@ const MessageList = ({
 
             if (res.ok) {
                 const conversationDetails = await res.json();
+                conversationDetails.users = conversationDetails.users.filter((user: User) => user.id !== currentUser?.id)
+
                 setUserList(conversationDetails.users)
                 setMessageList(conversationDetails.messages)
 

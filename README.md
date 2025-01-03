@@ -212,8 +212,8 @@
 - persistent state storage [x]
 - auto scroll to the bottom [x]
 - click User will call api to create new conversation or return existing conversation [x]
-
-- create group chat
+- set up antd [x]
+- create group chat [x]
 - search user
 - handle issue if user not in same conversation but still receive new_message_created socket event
 - move socket instance to redux store to handle log out functionality

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { Conversation } from "../types/Conversation"
 import { useSelector } from "react-redux"
 import { RootState } from "../state/store"
+import { User } from "../types/User"
 
 
 interface ConversationListProp {
@@ -37,6 +38,9 @@ const ConversationList = ({
             if (res.ok) {
                 const conversations = await res.json();
                 console.log("conversations are: ", conversations)
+                for (let i in conversations) {
+                    conversations[i].users = conversations[i].users.filter((user: User) => user.id !== currentUser?.id)
+                }
                 setConversationList(conversations);
                 console.log("Fetch user conversations successfully")
             } else {
