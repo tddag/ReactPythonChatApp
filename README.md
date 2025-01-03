@@ -211,9 +211,7 @@
 - active user [x]
 - persistent state storage [x]
 - auto scroll to the bottom [x]
-
-
-- click User will call api to create new conversation or return existing conversation
+- click User will call api to create new conversation or return existing conversation [x]
 
 - create group chat
 - search user

@@ -18,8 +18,19 @@ def register_routes(app):
                 })
             
             print("Type of user ids: ", type(data.get("user_ids")))
+            print("user ids are: ", data["user_ids"])
 
             with engine.connect() as conn:
+                existingConversation = conn.execute(text("SELECT cu.conversation_id FROM conversation_users cu WHERE cu.user_id IN :user_ids GROUP BY cu.conversation_id HAVING COUNT(DISTINCT cu.user_id) = :user_ids_len AND COUNT(DISTINCT cu.user_id) = (SELECT COUNT(*) FROM conversation_users cu2 WHERE cu2.conversation_id = cu.conversation_id)"), {
+                    "user_ids": data["user_ids"],
+                    "user_ids_len": len(data["user_ids"])
+                }).first()
+
+                if existingConversation:
+                    return jsonify({
+                        "conversation_id": existingConversation.conversation_id
+                    })
+                
                 # Create a new conversation
                 result = conn.execute(text("INSERT INTO conversations VALUES();"))
 

@@ -8,7 +8,7 @@ const Conversations = () => {
  
   return (
     <div className="flex gap-2 md-gap-4  h-5/6">
-      <ConversationList/>
+      <ConversationList conversation_id={id ? parseInt(id): undefined}/>
 
       <MessageList conversation_id={id ? parseInt(id) : undefined}/>
         

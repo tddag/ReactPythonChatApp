@@ -6,11 +6,18 @@ import { useSelector } from "react-redux"
 import { RootState } from "../state/store"
 
 
-const ConversationList = () => {
+interface ConversationListProp {
+    conversation_id: number | undefined
+}
+
+const ConversationList = ({
+    conversation_id
+}: ConversationListProp) => {
 
     const [conversationList, setConversationList] = useState<Conversation[]>([])
 
     const { currentUser } = useSelector((state: RootState) => state.user)
+    
 
     useEffect(() => {
         getUserConversations()
@@ -41,18 +48,16 @@ const ConversationList = () => {
     }
 
     return (
-        <div>
+        <div className="flex flex-col gap-4 p-2">
             {conversationList.length == 0 ? (
                 <div>
                     No conversation.
                 </div>
             ):
             conversationList.map((conversation, index) => (
-                <div key={index}>
-                    <Link to={`/conversations/${conversation.conversation_id}`}>
+                    <Link to={`/conversations/${conversation.conversation_id}`} key={index} className={"rounded-lg " + (conversation.conversation_id ==  conversation_id ? "bg-yellow-300" : "bg-yellow-100")} >
                         <ConversationListItem conversation={conversation}/>
                     </Link>                        
-                </div>
             ))}
         </div>
     )
