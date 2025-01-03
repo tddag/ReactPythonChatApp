@@ -209,10 +209,12 @@
 - create useUser hook to fetch all users [x]
 - create Users page [x]
 - active user [x]
+- persistent state storage [x]
+- auto scroll to the bottom [x]
+
 
 - click User will call api to create new conversation or return existing conversation
-- auto scroll to the bottom
-- persistent state storage
+
 - create group chat
 - search user
 - handle issue if user not in same conversation but still receive new_message_created socket event

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useEffect, useRef, useState } from "react"
 import MessageHeader from "./MessageHeader"
 import MessageItem from "./MessageItem"
 import MessageInput from "./MessageInput"
@@ -24,6 +24,8 @@ const MessageList = ({
 
     const socket = useContext(SocketContext)
 
+    const bottomListRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
         getConversationDetails()
 
@@ -39,6 +41,10 @@ const MessageList = ({
         }
 
     }, [conversation_id])
+
+    useEffect(() => {
+        bottomListRef.current?.scrollIntoView()
+    })
 
     const newMessageHandler = (data: Message) => {
         console.log("Client receive new message", data, "Current user id is: ", currentUser?.id)
@@ -154,6 +160,9 @@ const MessageList = ({
                         Select an existing conversation or start a new conversation
                     </div>
                 )}
+
+                <div ref={bottomListRef}></div>
+
             </div>
 
             <MessageInput conversation_id={conversation_id}/>
